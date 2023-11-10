@@ -3,6 +3,8 @@
 **Overview**:
 This is a book management applicaiton build by using Python, AWS, Twilio & Beautiful Soup. The application allows the user to create books and lists to organize their reading better. Additonally, the applition gets the synoposis of the book using goodreads.
 
+For any questions contact: Charvi Pattila - +1(817)-583-2451
+
 **Instructions for the Code:**
 
 1. Prerequisties: Run the command
