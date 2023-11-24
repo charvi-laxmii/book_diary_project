@@ -1,5 +1,6 @@
 import boto3
 from modules.list_class import create_list_in_class
+from modules.message_handler import send_message
 
 USERS_TABLE = boto3.resource("dynamodb", region_name="us-east-1").Table("Users")
 
@@ -18,6 +19,11 @@ def get_or_create_user(number):
             "default_list_id": default_list_id,
         }
         USERS_TABLE.put_item(Item=userKey)
+
+        send_message(
+            number,
+            "Welcome!! I am a book management bot built by Charvi Pattila. You can see my source code at https://github.com/charvi-laxmii/book_diary_project.",
+        )
 
         return User(number)
 
