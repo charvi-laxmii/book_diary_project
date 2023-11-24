@@ -17,7 +17,7 @@ from modules.validators import is_int_input_valid, is_not_empty_string, format_m
 def menu(user: User, number):
     send_message(
         number,
-        "1)Add Book\n2)Create List\n3)Pick my next read\n4)Update Book Info\n5)Update List\n6) Get book summary \n7)Exit menu \n",
+        "1)Add Book\n2)Create List\n3)Pick my next read\n4)Update Book Info\n5)Update List\n6) Get book summary\n7)Exit menu\n",
     )
     user.set_status(UserStatus.picking_menu_option.value)
 
@@ -83,7 +83,7 @@ def update_book_menu(user: User, message):
         exit_menu(user)
     else:
         message_content = (
-            f"{print_all_books(user.user_phone_number)}\nPlease select a book",
+            f"{print_all_books(user.user_phone_number)}\n\nPlease select a book.",
         )
         send_message(user.user_phone_number, message_content)
         user.set_status(UserStatus.pick_book_for_update_book.value)
@@ -101,7 +101,7 @@ def update_list_menu(user: User, message):
         user.set_cache(UserCache.list_count_for_update_list_cache.value, len(lists))
 
         message_content = (
-            f"{print_all_lists(user.user_phone_number)}\nPlease select a list"
+            f"{print_all_lists(user.user_phone_number)}\n\nPlease select a list."
         )
         send_message(user.user_phone_number, message_content)
         user.set_status(UserStatus.pick_list_to_update_list.value)
@@ -112,12 +112,12 @@ def print_summary_menu(user: User, message):
     if len(book_for_summary) == 0:
         send_message(
             user.user_phone_number,
-            "There are no books available for you to get the summary from",
+            "There are no books available for you to get the summary from.",
         )
         exit_menu(user)
     else:
         message_content = (
-            f"Please select a book{print_all_books(user.user_phone_number)}\n"
+            f"Please select a book\n\n{print_all_books(user.user_phone_number)}\n"
         )
 
         send_message(user.user_phone_number, message_content)
@@ -184,7 +184,7 @@ def select_whether_to_add_to_list_and_pick(user: User, message):
             if len(list_for_adding_book) == 0:
                 send_message(
                     user.user_phone_number,
-                    "You have no lists avialble to display. Press enter the list name to create one",
+                    "You have no lists avialble to display. Press enter the list name to create one.",
                 )
                 user.set_cache(
                     UserCache.is_creating_list_to_add_book_cache.value, "Yes"
@@ -192,7 +192,7 @@ def select_whether_to_add_to_list_and_pick(user: User, message):
                 user.set_status(UserStatus.create_list.value)
             else:
                 message_content = (
-                    f"Please select a list\n{print_all_lists(user.user_phone_number)}"
+                    f"Please select a list\n\n{print_all_lists(user.user_phone_number)}"
                 )
                 send_message(
                     user.user_phone_number,
@@ -264,9 +264,7 @@ def pick_my_next_read_choice(user: User, message):
                 )
                 exit_menu(user)
             else:
-                message_content = (
-                    f"{print_all_lists(user.user_phone_number)}\nPlease select a list"
-                )
+                message_content = f"{print_all_lists(user.user_phone_number)}\n\nPlease select a list."
                 send_message(user.user_phone_number, message_content)
                 user.set_status(UserStatus.pick_my_next_read_list_option.value)
         else:
@@ -281,7 +279,7 @@ def pick_my_next_read_choice(user: User, message):
                 picked_book = random.choice(lists)
                 send_message(
                     user.user_phone_number,
-                    f"\n Here is a suggestion for your next read\n{picked_book}\n",
+                    f"Here is a suggestion for your next read\n{picked_book}",
                 )
                 exit_menu(user)
 
@@ -293,7 +291,7 @@ def pick_my_next_read_list_option(user: User, message):
         list_for_pick_my_next_read = get_all_lists(user.user_phone_number)
         if len(list_for_pick_my_next_read[int(message) - 1].book_ids) == 0:
             send_message(
-                user.user_phone_number, "There are no books available in the list"
+                user.user_phone_number, "There are no books available in the list."
             )
             exit_menu(user)
         else:
@@ -304,7 +302,7 @@ def pick_my_next_read_list_option(user: User, message):
 
             send_message(
                 user.user_phone_number,
-                f"Here is a suggestion for your next read\n{picked_book}\n",
+                f"Here is a suggestion for your next read\n{picked_book}",
             )
 
             exit_menu(user)
@@ -333,10 +331,10 @@ def picking_update_book_menu_option(user: User, message):
         return
     else:
         if message == "1":
-            send_message(user.user_phone_number, "Enter the new book name")
+            send_message(user.user_phone_number, "Enter the new book name:")
             user.set_status(UserStatus.update_book_name.value)
         else:
-            send_message(user.user_phone_number, "Enter the new author name")
+            send_message(user.user_phone_number, "Enter the new author name:")
             user.set_status(UserStatus.update_author_name.value)
 
 
@@ -351,7 +349,7 @@ def update_book_name(user: User, message):
         all_books[book_index].edit_title(message)
 
         user.set_cache(UserCache.picked_book_index_for_update_book_cache.value, None)
-        send_message(user.user_phone_number, "Book name has been updated")
+        send_message(user.user_phone_number, "Book name has been updated.")
         exit_menu(user)
 
 
@@ -366,7 +364,7 @@ def update_author_name(user: User, message):
         all_books[book_index].edit_author_name(message)
 
         user.set_cache[UserCache.picked_book_index_for_update_book_cache.value, None]
-        send_message(user.user_phone_number, "Author name is updated")
+        send_message(user.user_phone_number, "Author name is updated.")
         exit_menu(user)
 
 
@@ -393,10 +391,10 @@ def picking_update_list_menu_option(user: User, message):
         return
     else:
         if message == "1":
-            send_message(user.user_phone_number, "Enter the new list name")
+            send_message(user.user_phone_number, "Enter the new list name:")
             user.set_status(UserStatus.update_list_name.value)
         elif message == "2":
-            send_message(user.user_phone_number, "Enter the book name")
+            send_message(user.user_phone_number, "Enter the book name:")
             user.set_cache(UserCache.updating_list_cache.value, "Yes")
             user.set_status(UserStatus.add_book_enter_name.value)
         else:
@@ -408,7 +406,7 @@ def picking_update_list_menu_option(user: User, message):
             book_ids = all_lists[list_index].book_ids
             if len(book_ids) == 0:
                 send_message(
-                    user.user_phone_number, "There are no books in this list to remove"
+                    user.user_phone_number, "There are no books in this list to remove."
                 )
                 exit_menu(user)
             else:
