@@ -85,6 +85,7 @@ def update_book_menu(user: User, message):
         message_content = (
             f"{print_all_books(user.user_phone_number)}\n\nPlease select a book.",
         )
+
         send_message(user.user_phone_number, message_content)
         user.set_status(UserStatus.pick_book_for_update_book.value)
 
@@ -363,7 +364,7 @@ def update_author_name(user: User, message):
         )
         all_books[book_index].edit_author_name(message)
 
-        user.set_cache[UserCache.picked_book_index_for_update_book_cache.value, None]
+        user.set_cache(UserCache.picked_book_index_for_update_book_cache.value, None)
         send_message(user.user_phone_number, "Author name is updated.")
         exit_menu(user)
 
