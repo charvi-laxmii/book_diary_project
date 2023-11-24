@@ -1,6 +1,7 @@
 import boto3
 from modules.list_class import create_list_in_class
 from modules.message_handler import send_message
+from modules.enums import UserStatus
 
 USERS_TABLE = boto3.resource("dynamodb", region_name="us-east-1").Table("Users")
 
@@ -14,7 +15,7 @@ def get_or_create_user(number):
         default_list_id = create_list_in_class(number, "all_books")
         userKey = {
             "user_phone_number": number,
-            "status": "menu",
+            "status": UserStatus.menu.value,
             "cache": {},
             "default_list_id": default_list_id,
         }
