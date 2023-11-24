@@ -240,6 +240,7 @@ def create_list(user: User, message):
                 user.cache[UserCache.book_id_cache.value]
             )
             user.set_cache(UserCache.book_id_cache.value, None)
+            user.set_cache(UserCache.is_creating_list_to_add_book_cache.value, None)
             send_message(
                 user.user_phone_number,
                 "Book has been added to given list!",
